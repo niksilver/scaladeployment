@@ -1,0 +1,20 @@
+---
+# Ensure there's an EC2 instance running
+# From http://docs.ansible.com/guide_aws.html
+
+- hosts: localhost
+  connection: local
+  gather_facts: False
+
+  tasks:
+    - name: Provision a set of instances
+      ec2:
+         key_name: scaladeployer-key-pair-ireland.pem
+         group: scaladeployer-sg-ireland
+         region: eu-west-1
+         instance_type: t2.micro
+         image: ami-6e7bd919
+         wait: true
+         exact_count: 1
+         count_tag: class
+      register: ec2
