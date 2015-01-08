@@ -17,5 +17,10 @@
          image: ami-f0b11187
          wait: true
          exact_count: 1
-         count_tag: class
+         # Used for exact_count
+         count_tag:
+           class: scala
+         # Used for new instances
+         instance_tags:
+           class: scala
       register: ec2
