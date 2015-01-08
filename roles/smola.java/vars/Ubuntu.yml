@@ -23,7 +23,7 @@ java_packages_full:
   - oracle-java7-installer
 
 java_packages:
-  - openjdk-7-jdk
-  #- oracle-java7-installer
+  #- openjdk-7-jdk
+  - oracle-java7-installer
 
 java_packages_to_remove: "{{ java_packages_full | difference(java_packages) }}"
