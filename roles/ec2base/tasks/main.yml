@@ -1,0 +1,28 @@
+---
+# Ensure there's an EC2 instance running
+# From http://docs.ansible.com/guide_aws.html
+
+- name: Provision a set of instances
+  ec2:
+     key_name: scaladeployer-key-pair-ireland
+     group: scaladeployer-sg-ireland
+     region: eu-west-1
+     instance_type: t2.micro
+     # Ubuntu Server 14.04 LTS (HVM), SSD Volume Type
+     image: ami-f0b11187
+     wait: true
+     exact_count: 1
+     # Used for exact_count
+     count_tag:
+       class: scala
+     # Used for new instances
+     instance_tags:
+       class: scala
+  register: ec2
+
+- name: Add all instance public IPs to host group
+  add_host: hostname={{ item.public_dns_name }}
+            ansible_ssh_private_key_file=/home/Nik/.ssh/scaladeployer-key-pair-ireland.pem
+            groupname=ec2hosts
+  with_items: ec2.tagged_instances
+  register: blah
