@@ -8,13 +8,11 @@
   roles:
     - ec2base
 
-  post_tasks:
-    - name: Debugging here and now
-      debug: var=blah
-
 - name: Install Java and Scala
   hosts: ec2hosts
   user: ubuntu
+  sudo: true
+  sudo_user: root
   gather_facts: true
 
   roles:

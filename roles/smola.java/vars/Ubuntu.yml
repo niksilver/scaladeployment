@@ -2,6 +2,7 @@
 # JREs are not included in the list.
 # Otherwise, JDK would be incorrectly
 # cleaned up.
+
 java_packages_full:
   - openjdk-6-jdk
   - openjdk-6-jdk:i386
@@ -19,4 +20,10 @@ java_packages_full:
   #- openjdk-7-jre-headless:i386
   #- openjdk-7-jre-zero
   #- openjdk-7-jre-zero:i386
+  - oracle-java7-installer
+
+java_packages:
+  - openjdk-7-jdk
+  #- oracle-java7-installer
+
 java_packages_to_remove: "{{ java_packages_full | difference(java_packages) }}"
