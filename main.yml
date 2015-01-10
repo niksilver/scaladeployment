@@ -1,6 +1,7 @@
 ---
 
 - name: Set up base EC2 instances
+  # Don't forget to have your AWS credentials available
   hosts: localhost
   connection: local
   gather_facts: false
@@ -16,4 +17,4 @@
   gather_facts: true
 
   roles:
-    - smola.java
+    - ANXS.scala
