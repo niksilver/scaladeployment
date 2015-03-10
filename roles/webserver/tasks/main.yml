@@ -1,0 +1,8 @@
+---
+# Ensure we've got a web server up and running
+
+- name: Install web server
+  apt: name=lighttpd state=present
+
+- name: Start web server
+  service: name=lighttpd state=running enabled=yes

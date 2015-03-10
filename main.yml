@@ -19,11 +19,11 @@
   roles:
     - azavea.scala
 
-- name: Start Apache
+- name: Start web server
   hosts: ec2hosts
   user: ubuntu
   sudo: true
   sudo_user: root
   roles:
-    - apache
+    - webserver
 

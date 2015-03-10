@@ -1,8 +1,0 @@
----
-# Ensure we've got Apache up and running
-
-- name: Install Apache
-  apt: name=apache2 state=present
-
-- name: Start Apache
-  service: name=apache2 state=running enabled=yes
