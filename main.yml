@@ -9,29 +9,29 @@
   roles:
     - ec2base
 
-- name: Install Java and Scala
-  hosts: ec2hosts
-  user: ubuntu
-  sudo: true
-  sudo_user: root
-  gather_facts: true
-
-  vars:
-    oracle_jdk_java_versions: [8]        # A list of java versions to be installed
-    oracle_jdk_java_version_default: 8   # The version to be the default
-    scala_version: "2.11.6"
-    scala_sbt_version: "0.13.7"
-
-  roles:
-    - azavea.scala
-
-- name: Start web server
-  hosts: ec2hosts
-  user: ubuntu
-  sudo: true
-  sudo_user: root
-  roles:
-    - webserver
+#- name: Install Java and Scala
+#  hosts: ec2hosts
+#  user: ubuntu
+#  sudo: true
+#  sudo_user: root
+#  gather_facts: true
+#
+#  vars:
+#    oracle_jdk_java_versions: [8]        # A list of java versions to be installed
+#    oracle_jdk_java_version_default: 8   # The version to be the default
+#    scala_version: "2.11.6"
+#    scala_sbt_version: "0.13.7"
+#
+#  roles:
+#    - azavea.scala
+#
+#- name: Start web server
+#  hosts: ec2hosts
+#  user: ubuntu
+#  sudo: true
+#  sudo_user: root
+#  roles:
+#    - webserver
 
 - name: Get the web app up and running
   hosts: ec2hosts
@@ -39,7 +39,11 @@
   sudo: false
 
   vars:
-    secret_message: "Hello, world!"
+    app_name: critical-sight
+    app_version: 0.1
+    app_archive_dir: ../criticalsight/target/universal
+    app_server_port: 9000
+    app_server_pid_file: /var/run/play.pid
 
   roles:
     - webapp

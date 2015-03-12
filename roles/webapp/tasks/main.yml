@@ -1,16 +1,48 @@
 ---
-- name: Set up the webapp user
-  user: name=webapp state=present
-  sudo: true
+#- name: Set up the webapp user
+#  user: name=webapp state=present
+#  sudo: true
+#
+#- name: Make sure unzip is installed
+#  apt: name=unzip state=present
+#  sudo: true
+#
+#- name: Install the app
+#  sudo: yes
+#  sudo_user: webapp
+#  unarchive:
+#    src: "{{ app_archive_dir}}/{{ app_name }}-{{ app_version }}.zip"
+#    dest: ~webapp
+#
+#- name: Kill the old app
+#  sudo: yes
+#  sudo_user: webapp
+#  shell: kill "$(cat {{ app_server_pid_file }})"
+#  args:
+#    removes: "{{ app_server_pid_file }}"
+#
+#- name: Make sure old app has stopped
+#  wait_for:
+#    port: "{{ app_server_port }}"
+#    state: stopped
+#    timeout: 10
+#
+#- name: Make sure old app has tidied up its PID file
+#  wait_for:
+#    path: "{{ app_server_pid_file }}"
+#    state: absent
+#    timeout: 10
 
-- name: Make sure unzip is installed
-  apt: name=unzip state=present
-  sudo: true
-
-- name: Install the app
+- name: Start the new app
   sudo: yes
   sudo_user: webapp
-  unarchive: src=../criticalsight/target/universal/critical-sight-0.1.zip dest=~webapp
+  shell: bash "{{ app_name }}" "-Dpidfile.path={{ app_server_pid_file }}" "-Dhttp.port={{ app_server_port }}"
+  args:
+    chdir: "{{ app_name }}-{{ app_version }}/bin"
 
-- name: See if we can use a variable
-  debug: msg='{{ secret_message }}'
+- name: Make sure new app has started
+  wait_for:
+    port: "{{ app_server_port }}"
+    state: started
+    timeout: 20
+
