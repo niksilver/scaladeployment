@@ -36,7 +36,9 @@
 - name: Start the new app
   sudo: yes
   sudo_user: webapp
-  shell: bash "{{ app_name }}" "-Dpidfile.path={{ app_server_pid_file }}" "-Dhttp.port={{ app_server_port }}"
+  shell: "{{ item }}"
+  with_items:
+    - nohup bash "{{ app_name }}" "-Dpidfile.path={{ app_server_pid_file }}" "-Dhttp.port={{ app_server_port }}" &
   args:
     chdir: "~webapp/{{ app_name }}-{{ app_version }}/bin"
 
