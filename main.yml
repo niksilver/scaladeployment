@@ -9,21 +9,27 @@
   roles:
     - ec2base
 
-- name: Install Java and Scala
+#- name: Install Java and Scala
+#  hosts: ec2hosts
+#  user: ubuntu
+#  sudo: true
+#  sudo_user: root
+#  gather_facts: true
+#
+#  roles:
+#    - azavea.scala
+#
+#- name: Start web server
+#  hosts: ec2hosts
+#  user: ubuntu
+#  sudo: true
+#  sudo_user: root
+#  roles:
+#    - webserver
+
+- name: Get the web app up and running
   hosts: ec2hosts
   user: ubuntu
-  sudo: true
-  sudo_user: root
-  gather_facts: true
-
+  sudo: false
   roles:
-    - azavea.scala
-
-- name: Start web server
-  hosts: ec2hosts
-  user: ubuntu
-  sudo: true
-  sudo_user: root
-  roles:
-    - webserver
-
+    - webapp

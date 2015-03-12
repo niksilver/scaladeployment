@@ -1,0 +1,13 @@
+---
+- name: Set up the webapp user
+  user: name=webapp state=present
+  sudo: true
+
+- name: Make sure unzip is installed
+  apt: name=unzip state=present
+  sudo: true
+
+- name: Install the app
+  sudo: yes
+  sudo_user: webapp
+  unarchive: src=../criticalsight/target/universal/critical-sight-0.1.zip dest=~webapp
