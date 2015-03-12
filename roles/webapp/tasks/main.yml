@@ -38,11 +38,33 @@
   sudo_user: webapp
   shell: bash "{{ app_name }}" "-Dpidfile.path={{ app_server_pid_file }}" "-Dhttp.port={{ app_server_port }}"
   args:
-    chdir: "{{ app_name }}-{{ app_version }}/bin"
+    chdir: "~webapp/{{ app_name }}-{{ app_version }}/bin"
 
-- name: Make sure new app has started
-  wait_for:
-    port: "{{ app_server_port }}"
-    state: started
-    timeout: 20
+- name: Test command permissions
+  sudo: yes
+  sudo_user: webapp
+  command: touch test.txt
+  args:
+    chdir: "~webapp/{{ app_name }}-{{ app_version }}/bin"
+
+- name: Clean up after testing command permissions
+  sudo: yes
+  sudo_user: webapp
+  file: path=~webapp/critical-sight-0.1/bin/test.txt state=absent
+
+- name: Test permissions
+  sudo: yes
+  sudo_user: webapp
+  file: path=~webapp/critical-sight-0.1/bin/test.txt state=touch
+
+- name: Clean up after testing permissions
+  sudo: yes
+  sudo_user: webapp
+  file: path=~webapp/critical-sight-0.1/bin/test.txt state=absent
+
+#- name: Make sure new app has started
+#  wait_for:
+#    port: "{{ app_server_port }}"
+#    state: started
+#    timeout: 20
 

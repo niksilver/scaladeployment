@@ -43,7 +43,7 @@
     app_version: 0.1
     app_archive_dir: ../criticalsight/target/universal
     app_server_port: 9000
-    app_server_pid_file: /var/run/play.pid
+    app_server_pid_file: /tmp/play.pid
 
   roles:
     - webapp
