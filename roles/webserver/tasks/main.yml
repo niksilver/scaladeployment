@@ -4,5 +4,13 @@
 - name: Install web server
   apt: name=lighttpd state=present
 
-- name: Start web server
+- name: Install our initial conf file that listens to the web app
+  template: >
+    src=lighttpd.conf.j2
+    dest=/etc/lighttpd/lighttpd.conf
+  notify:
+    - Restart web server
+
+- name: Ensure web server running
   service: name=lighttpd state=running enabled=yes
+
